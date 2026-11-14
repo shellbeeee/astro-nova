@@ -1,4 +1,15 @@
-export type Explorer = { id: string; equipment: string; name: string; personality: string; emoji: string; location: "moon" | "mars" | "space"; greeting: string; dialogue: string; information: string };
+import lunarModule from "@/assets/lunar-module.png.asset.json";
+import moonBuggy from "@/assets/moon-buggy.png.asset.json";
+import alsep from "@/assets/alsep.png.asset.json";
+import surveyor from "@/assets/surveyor.png.asset.json";
+import sojourner from "@/assets/sojourner.png.asset.json";
+import spirit from "@/assets/spirit.png.asset.json";
+import opportunity from "@/assets/opportunity.png.asset.json";
+import phoenix from "@/assets/phoenix.png.asset.json";
+import insight from "@/assets/insight.png.asset.json";
+import kepler from "@/assets/kepler.png.asset.json";
+
+export type Explorer = { id: string; equipment: string; name: string; personality: string; image: string; location: "moon" | "mars" | "space"; greeting: string; dialogue: string; information: string };
 
 export const explorers: Explorer[] = [
   {
@@ -6,7 +17,7 @@ export const explorers: Explorer[] = [
     "equipment": "Apollo Lunar Modules",
     "name": "Eagle",
     "personality": "The caring captain",
-    "emoji": "🌟",
+    "image": lunarModule.url,
     "location": "moon",
     "greeting": "Steady now, little astronauts. I’ll help you get home!",
     "dialogue": "Hi! I’m a Lunar Module. My bottom half stayed here on the Moon and worked as a launch pad, so my top half could blast the astronauts back to space!",
@@ -17,7 +28,7 @@ export const explorers: Explorer[] = [
     "equipment": "Lunar Roving Vehicles",
     "name": "Rover Rex",
     "personality": "The playful speedster",
-    "emoji": "🚙",
+    "image": moonBuggy.url,
     "location": "moon",
     "greeting": "Last one to the crater is a moon rock!",
     "dialogue": "Beep beep! I’m a moon buggy! My wheels are made of woven wire, not rubber, and they have no air inside!",
@@ -28,7 +39,7 @@ export const explorers: Explorer[] = [
     "equipment": "ALSEP Science Stations",
     "name": "Professor AL",
     "personality": "The patient scientist",
-    "emoji": "📡",
+    "image": alsep.url,
     "location": "moon",
     "greeting": "A little patience and a lot of listening—that’s science!",
     "dialogue": "I’m a science station! I measured moonquakes and sent messages to Earth for years, until NASA switched me off in 1977.",
@@ -39,7 +50,7 @@ export const explorers: Explorer[] = [
     "equipment": "Surveyor Landers",
     "name": "Scout Surveyor",
     "personality": "The brave trailblazer",
-    "emoji": "🦾",
+    "image": surveyor.url,
     "location": "moon",
     "greeting": "I’ll go first! There’s a whole new world to discover.",
     "dialogue": "I’m Surveyor 3, a robot scout! I landed on the Moon before any astronaut, to check that the ground was strong enough to land on!",
@@ -50,7 +61,7 @@ export const explorers: Explorer[] = [
     "equipment": "Sojourner Rover",
     "name": "Sojourner",
     "personality": "The tiny, fearless adventurer",
-    "emoji": "🤖",
+    "image": sojourner.url,
     "location": "mars",
     "greeting": "Small wheels, big dreams!",
     "dialogue": "I’m Sojourner, the first rover to ever drive on Mars! A 12-year-old girl named Valerie Ambroise helped name me, after a hero named Sojourner Truth!",
@@ -61,7 +72,7 @@ export const explorers: Explorer[] = [
     "equipment": "Spirit Rover",
     "name": "Spirit",
     "personality": "The determined explorer",
-    "emoji": "🧭",
+    "image": spirit.url,
     "location": "mars",
     "greeting": "One more rock, one more discovery. I never give up!",
     "dialogue": "I’m Spirit! I was only supposed to work for 3 months, but I explored Mars for about 6 years!",
@@ -72,7 +83,7 @@ export const explorers: Explorer[] = [
     "equipment": "Opportunity Rover",
     "name": "Opportunity",
     "personality": "The cheerful marathoner",
-    "emoji": "🏁",
+    "image": opportunity.url,
     "location": "mars",
     "greeting": "Another mile? Oh, goody! Let’s see what’s over that hill.",
     "dialogue": "I’m Opportunity! I drove more than 28 miles on Mars, which is farther than a marathon!",
@@ -83,7 +94,7 @@ export const explorers: Explorer[] = [
     "equipment": "Phoenix Lander",
     "name": "Phoenix",
     "personality": "The curious ice detective",
-    "emoji": "❄️",
+    "image": phoenix.url,
     "location": "mars",
     "greeting": "Something sparkly under the soil? Time to investigate!",
     "dialogue": "I’m Phoenix! I dug into the ground near the Mars north pole and found real water ice!",
@@ -94,7 +105,7 @@ export const explorers: Explorer[] = [
     "equipment": "InSight Lander",
     "name": "InSight",
     "personality": "The gentle, thoughtful listener",
-    "emoji": "💓",
+    "image": insight.url,
     "location": "mars",
     "greeting": "Shhh… every little rumble has a story.",
     "dialogue": "I’m InSight! I listened to Mars and heard more than 1,300 marsquakes!",
@@ -105,7 +116,7 @@ export const explorers: Explorer[] = [
     "equipment": "Kepler Space Telescope",
     "name": "Kepler",
     "personality": "The dreamy planet spotter",
-    "emoji": "🔭",
+    "image": kepler.url,
     "location": "space",
     "greeting": "I wonder who else is out there among those twinkling stars…",
     "dialogue": "I’m Kepler, a space telescope! I stared at one little patch of sky and helped find thousands of planets around other stars!",

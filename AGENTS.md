@@ -30,3 +30,5 @@ use the editor.
 <!-- LOVABLE:END -->
 
 - Keep mission facts and character dialogue in a browser-safe data module so each explorer can have an independent, accessible information dialog.
+
+- Store uploaded equipment illustrations as CDN asset pointers and reference their URLs in browser-safe explorer data so chapter lineups, cards, and dialogs share the same image.

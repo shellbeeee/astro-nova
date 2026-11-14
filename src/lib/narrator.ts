@@ -4,7 +4,6 @@ export type TrioHead = {
   id: Speaker;
   position: string;
   role: string;
-  emoji: string;
   color: string;
   border: string;
   blurb: string;
@@ -16,7 +15,6 @@ export const trioHeads: TrioHead[] = [
     id: "host",
     position: "Center Head",
     role: "The Enthusiastic Host",
-    emoji: "🤖",
     color: "text-primary",
     border: "border-primary/40",
     blurb: "Big goofy grin, always winking, and leading the tour with all the energy in the solar system.",
@@ -25,7 +23,6 @@ export const trioHeads: TrioHead[] = [
     id: "scientist",
     position: "Left Head",
     role: "The Curious Scientist",
-    emoji: "📡",
     color: "text-moon",
     border: "border-moon/40",
     blurb: "Wide-eyed and focused, with antennas that pick up space signals and explain how all the tech works.",
@@ -34,7 +31,6 @@ export const trioHeads: TrioHead[] = [
     id: "dramatic",
     position: "Right Head",
     role: "The Dramatic Sidekick",
-    emoji: "🎭",
     color: "text-mars",
     border: "border-mars/50",
     blurb: "Expressive, easily amazed, and occasionally very dramatic about the dangers of space.",
