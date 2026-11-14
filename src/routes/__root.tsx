@@ -82,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Lonely Explorers" },
-      { name: "description", content: "A kid-friendly space story about the robots left on the Moon and Mars." },
+      { name: "description", content: "A kid-friendly space story about the robots left on the Moon and Mars, guided by T.R.I.O., the three-headed Robotic Interplanetary Observer." },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Lonely Explorers" },
       { property: "og:description", content: "A kid-friendly space story about the robots left on the Moon and Mars." },
