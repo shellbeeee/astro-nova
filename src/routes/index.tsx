@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import narrator from "@/assets/narrator.jpg";
-import moon from "@/assets/moon-friends.jpg";
-import mars from "@/assets/mars-friends.jpg";
+import moon from "@/assets/moon-explorers.jpg";
+import mars from "@/assets/mars-explorers.jpg";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
+import { explorers, type Explorer } from "@/lib/explorers";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,34 +20,9 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Friend = { name: string; real: string; year: string; emoji: string; says: string; fact: string };
-
-const moonFriends: Friend[] = [
-  { name: "Mirror Mia", real: "Laser Ranging Retroreflector", year: "Apollo 11 · 1969", emoji: "🪞",
-    says: "Scientists on Earth shine lasers at me, and I bounce them right back! That's how they know how far away the Moon is.",
-    fact: "Thanks to Mia, we know the Moon drifts about 3.8 cm farther from Earth every year — that's how fast your fingernails grow!" },
-  { name: "Wobbles", real: "Passive Seismic Experiment", year: "Apollo 11 · 1969", emoji: "📡",
-    says: "I listen very, very carefully. When the Moon shakes, I feel it in my toes — I discovered moonquakes!",
-    fact: "Moonquakes can last over an hour, because the Moon is dry and rings like a bell." },
-  { name: "Rover Rex", real: "Lunar Roving Vehicle", year: "Apollo 15, 16 & 17 · 1971–72", emoji: "🚙",
-    says: "Vroom! I gave astronauts rides across craters. There are three of me, still parked where we said goodbye.",
-    fact: "Rex's tires were made of woven wire mesh, because rubber would crack in the Moon's cold." },
-];
-
-const marsFriends: Friend[] = [
-  { name: "Little Sojo", real: "Sojourner Rover", year: "Mars Pathfinder · 1997", emoji: "🤖",
-    says: "I'm small — about the size of a microwave — but I was the very first rover ever to roll on Mars!",
-    fact: "Sojourner was planned to work for 7 days. It kept going for 83!" },
-  { name: "Spirit & Oppy", real: "Spirit and Opportunity Rovers", year: "Landed 2004", emoji: "👯",
-    says: "We're twins on opposite sides of Mars! We found clues that water once flowed here long, long ago.",
-    fact: "Opportunity was meant to drive for 90 days. It explored for almost 15 years and drove over a marathon!" },
-  { name: "Thumpy", real: "InSight Lander", year: "Landed 2018", emoji: "💓",
-    says: "I put my ear to the ground and listened to Mars's heartbeat — over 1,300 marsquakes!",
-    fact: "InSight's final message in 2022 was: \"Don't worry about me.\"" },
-  { name: "Ginny", real: "Ingenuity Helicopter", year: "Flew 2021–2024", emoji: "🚁",
-    says: "Whirrr! I was the first machine ever to fly on another planet. Everyone said one flight — I did 72!",
-    fact: "Ginny carries a tiny piece of fabric from the Wright brothers' first airplane." },
-];
+const moonFriends = explorers.filter((f) => f.location === "moon");
+const marsFriends = explorers.filter((f) => f.location === "mars");
+const spaceFriends = explorers.filter((f) => f.location === "space");
 
 function Narrator({ children }: { children: React.ReactNode }) {
   return (
@@ -59,19 +36,30 @@ function Narrator({ children }: { children: React.ReactNode }) {
   );
 }
 
-function FriendCard({ f, tone }: { f: Friend; tone: "moon" | "mars" }) {
-  const [open, setOpen] = useState(false);
+export function FriendCard({ f, tone }: { f: Explorer; tone: "moon" | "mars" | "space" }) {
+  const color = tone === "moon" ? "text-moon" : tone === "mars" ? "text-mars" : "text-primary";
   return (
-    <article className={`rounded-3xl border-2 bg-card p-6 transition-transform hover:-translate-y-1 ${tone === "moon" ? "border-moon/40" : "border-mars/50"}`}>
-      <div className="text-5xl">{f.emoji}</div>
-      <h3 className={`mt-3 text-2xl font-bold ${tone === "moon" ? "text-moon" : "text-mars"}`}>{f.name}</h3>
-      <p className="text-sm text-muted-foreground">{f.real} · {f.year}</p>
-      <p className="mt-4 rounded-2xl bg-secondary p-4 text-base italic">“{f.says}”</p>
-      <button onClick={() => setOpen(!open)} className="mt-4 rounded-full bg-primary px-4 py-2 font-display font-semibold text-primary-foreground">
-        {open ? "Hide fun fact" : "✨ Fun fact!"}
-      </button>
-      {open && <p className="mt-3 text-base">{f.fact}</p>}
-    </article>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="ghost" aria-label={`Meet ${f.name}`} className={`h-full w-full flex-col items-start justify-start whitespace-normal rounded-3xl border-2 bg-card p-6 text-left text-foreground hover:bg-secondary motion-safe:hover:-translate-y-1 ${tone === "moon" ? "border-moon/40" : tone === "mars" ? "border-mars/50" : "border-primary/40"}`}>
+          <span aria-hidden="true" className="text-5xl">{f.emoji}</span>
+          <span className={`mt-2 font-display text-2xl font-bold ${color}`}>{f.name}</span>
+          <span className="text-sm text-muted-foreground">{f.equipment}</span>
+          <span className={`font-display text-base ${color}`}>{f.personality}</span>
+          <span className="mt-3 text-lg italic leading-relaxed">“{f.dialogue}”</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-3xl border-primary/40 bg-card p-6 sm:p-8">
+        <DialogHeader className="pr-5 text-left">
+          <span aria-hidden="true" className="text-5xl">{f.emoji}</span>
+          <DialogTitle className={`font-display text-3xl leading-tight tracking-normal ${color}`}>{f.name}</DialogTitle>
+          <DialogDescription className="text-base">{f.equipment} · {f.personality}</DialogDescription>
+        </DialogHeader>
+        <p className="font-display text-lg text-primary">“{f.greeting}”</p>
+        <p className="text-lg leading-relaxed">{f.information}</p>
+        <DialogClose asChild><Button className="mt-2 font-display text-base">Back to the story</Button></DialogClose>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -83,7 +71,7 @@ function Index() {
           <p className="font-display text-primary">A bedtime story from space</p>
           <h1 className="mt-2 text-5xl font-bold leading-tight md:text-7xl">The Lonely Explorers</h1>
           <p className="mt-5 text-xl text-muted-foreground">Far, far away, brave little robots are still waiting where we left them. Want to meet them?</p>
-          <a href="#moon" className="mt-8 inline-block rounded-full bg-primary px-7 py-3 font-display text-lg font-semibold text-primary-foreground">Start the story 🚀</a>
+          <Button asChild className="mt-8 h-auto rounded-full px-7 py-3 font-display text-lg font-semibold"><a href="#moon">Start the story 🚀</a></Button>
         </div>
         <img src={narrator} alt="Professor Hoot, an owl astronaut reading a storybook" width={1024} height={1024} className="animate-floaty mx-auto w-full max-w-md rounded-[2.5rem] border-4 border-primary/40" />
       </header>
@@ -96,7 +84,13 @@ function Index() {
         <h2 className="text-center text-4xl font-bold text-moon md:text-5xl">🌙 Chapter 1: Friends on the Moon</h2>
         <img src={moon} alt="Cute Moon instruments smiling on the lunar surface" width={1536} height={1024} loading="lazy" className="mt-8 w-full rounded-[2rem] border-4 border-moon/30" />
         <div className="mt-8"><Narrator>The Moon is quiet and has no wind, so footprints and wheel tracks stay for millions of years. Our first friends arrived with the Apollo astronauts!</Narrator></div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">{moonFriends.map((f) => <FriendCard key={f.name} f={f} tone="moon" />)}</div>
+        <div className="mt-10 grid gap-6 md:grid-cols-2">{moonFriends.map((f) => <FriendCard key={f.id} f={f} tone="moon" />)}</div>
+      </section>
+
+      <section id="space" className="mx-auto mt-24 max-w-3xl px-6">
+        <h2 className="text-center text-4xl font-bold text-primary md:text-5xl">🔭 Chapter 3: Among the Stars</h2>
+        <div className="mt-8"><Narrator>One more friend is waiting! Kepler isn't on Mars or the Moon. This dreamy telescope travels around the Sun, trailing behind Earth, with a story about faraway planets.</Narrator></div>
+        <div className="mt-10">{spaceFriends.map((f) => <FriendCard key={f.id} f={f} tone="space" />)}</div>
       </section>
 
       <section className="mt-24 px-6">

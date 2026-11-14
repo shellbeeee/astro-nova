@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Keep mission facts and character dialogue in a browser-safe data module so each explorer can have an independent, accessible information dialog.
