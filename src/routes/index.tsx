@@ -1,18 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import narrator from "@/assets/narrator.jpg";
+import trio from "@/assets/trio-narrator.png";
 import moon from "@/assets/moon-explorers.jpg";
 import mars from "@/assets/mars-explorers.jpg";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { explorers, type Explorer } from "@/lib/explorers";
+import { speakerMeta, trioHeads, type Speaker } from "@/lib/narrator";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "The Lonely Explorers — A Space Story for Kids" },
-      { name: "description", content: "Meet the NASA robots and instruments left behind on the Moon and Mars, told by Professor Hoot." },
+      { name: "description", content: "Meet the NASA robots and instruments left behind on the Moon and Mars, told by T.R.I.O., the three-headed Robotic Interplanetary Observer." },
       { property: "og:title", content: "The Lonely Explorers — A Space Story for Kids" },
-      { property: "og:description", content: "Meet the NASA robots and instruments left behind on the Moon and Mars." },
+      { property: "og:description", content: "Meet the NASA robots and instruments left behind on the Moon and Mars, guided by T.R.I.O." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -24,12 +25,13 @@ const moonFriends = explorers.filter((f) => f.location === "moon");
 const marsFriends = explorers.filter((f) => f.location === "mars");
 const spaceFriends = explorers.filter((f) => f.location === "space");
 
-function Narrator({ children }: { children: React.ReactNode }) {
+function Narrator({ children, speaker = "host" }: { children: React.ReactNode; speaker?: Speaker }) {
+  const head = speakerMeta[speaker];
   return (
     <div className="mx-auto flex max-w-3xl items-start gap-4 rounded-3xl border border-primary/30 bg-card/70 p-5 backdrop-blur">
-      <img src={narrator} alt="Professor Hoot the owl" width={1024} height={1024} loading="lazy" className="h-16 w-16 shrink-0 rounded-full border-2 border-primary object-cover" />
+      <img src={trio} alt="T.R.I.O., the three-headed robot narrator" width={1024} height={1024} loading="lazy" className="h-16 w-16 shrink-0 rounded-full border-2 border-primary object-cover object-top" />
       <div>
-        <p className="font-display text-sm font-semibold text-primary">Professor Hoot says…</p>
+        <p className={`font-display text-sm font-semibold ${head.color}`}>{head.position} · {head.role} says…</p>
         <p className="mt-1 text-lg leading-relaxed">{children}</p>
       </div>
     </div>
@@ -70,42 +72,59 @@ function Index() {
         <div>
           <p className="font-display text-primary">A bedtime story from space</p>
           <h1 className="mt-2 text-5xl font-bold leading-tight md:text-7xl">The Lonely Explorers</h1>
-          <p className="mt-5 text-xl text-muted-foreground">Far, far away, brave little robots are still waiting where we left them. Want to meet them?</p>
+          <p className="mt-5 text-xl text-muted-foreground">Far, far away, brave little robots are still waiting where we left them. T.R.I.O. is ready to introduce them.</p>
           <Button asChild className="mt-8 h-auto rounded-full px-7 py-3 font-display text-lg font-semibold"><a href="#moon">Start the story 🚀</a></Button>
         </div>
-        <img src={narrator} alt="Professor Hoot, an owl astronaut reading a storybook" width={1024} height={1024} className="animate-floaty mx-auto w-full max-w-md rounded-[2.5rem] border-4 border-primary/40" />
+        <img src={trio} alt="T.R.I.O., the three-headed Robotic Interplanetary Observer, floating in space" width={1024} height={1024} className="animate-floaty mx-auto w-full max-w-md rounded-[2.5rem] border-4 border-primary/40" />
       </header>
 
       <section className="mt-20 px-6">
-        <Narrator>Hoo-hoo! I'm Professor Hoot. Long ago, people sent amazing machines to the Moon and to Mars. When their jobs were done, they stayed behind. Some are still working today! Let's fly up and say hello.</Narrator>
+        <Narrator speaker="host">Beep-boop! I'm T.R.I.O. — the Robotic Interplanetary Observer! One robot, three heads, and every single one of them has an opinion. Long ago, people sent amazing machines to the Moon and to Mars. When their jobs were done, they stayed behind. Some are still working today! Let's fly up and say hello.</Narrator>
+      </section>
+
+      <section className="mx-auto mt-16 max-w-5xl px-6">
+        <h2 className="text-center text-3xl font-bold text-primary md:text-4xl">Meet your guides</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-center text-lg text-muted-foreground">T.R.I.O. never travels alone. Each head has a job, and they all talk at once.</p>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {trioHeads.map((head) => (
+            <div key={head.id} className={`rounded-3xl border-2 bg-card p-6 ${head.border}`}>
+              <span aria-hidden="true" className="text-4xl">{head.emoji}</span>
+              <p className={`mt-2 font-display text-xl font-bold ${head.color}`}>{head.position}</p>
+              <p className="font-display text-base text-primary">{head.role}</p>
+              <p className="mt-3 leading-relaxed">{head.blurb}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section id="moon" className="mx-auto mt-24 max-w-6xl px-6">
         <h2 className="text-center text-4xl font-bold text-moon md:text-5xl">🌙 Chapter 1: Friends on the Moon</h2>
         <img src={moon} alt="Cute Moon instruments smiling on the lunar surface" width={1536} height={1024} loading="lazy" className="mt-8 w-full rounded-[2rem] border-4 border-moon/30" />
-        <div className="mt-8"><Narrator>The Moon is quiet and has no wind, so footprints and wheel tracks stay for millions of years. Our first friends arrived with the Apollo astronauts!</Narrator></div>
+        <div className="mt-8"><Narrator speaker="scientist">Left head reporting in! The Moon is quiet and has no wind, so footprints and wheel tracks stay for millions of years. Our first friends arrived with the Apollo astronauts!</Narrator></div>
         <div className="mt-10 grid gap-6 md:grid-cols-2">{moonFriends.map((f) => <FriendCard key={f.id} f={f} tone="moon" />)}</div>
       </section>
 
       <section className="mt-24 px-6">
-        <Narrator>Now buckle up! Mars is much farther — the trip takes about seven months. Nobody has ever visited Mars in person, so robots went all by themselves.</Narrator>
+        <Narrator speaker="dramatic">Now buckle up, because Mars is much farther — the trip takes about seven months. And nobody — nobody! — has ever visited Mars in person. The robots went all by themselves. Alone. In the dust. *gasp*</Narrator>
       </section>
 
       <section id="mars" className="mx-auto mt-24 max-w-6xl px-6">
         <h2 className="text-center text-4xl font-bold text-mars md:text-5xl">🔴 Chapter 2: Friends on Mars</h2>
         <img src={mars} alt="Sojourner, Spirit, Opportunity, Phoenix and InSight on Mars" width={1536} height={1024} loading="lazy" className="mt-8 w-full rounded-[2rem] border-4 border-mars/40" />
+        <div className="mt-8"><Narrator speaker="scientist">Here is the clever part: these robots had to drive themselves. A radio message from Earth can take up to twenty minutes to arrive, so by the time we say "stop," a rover has already rolled twice!</Narrator></div>
         <div className="mt-10 grid gap-6 md:grid-cols-2">{marsFriends.map((f) => <FriendCard key={f.name} f={f} tone="mars" />)}</div>
       </section>
 
       <section className="mx-auto mt-24 max-w-3xl px-6 text-center">
         <h2 className="text-center text-4xl font-bold text-primary md:text-5xl">🔭 Chapter 3: Among the Stars</h2>
-        <div className="mt-8"><Narrator>One more friend is waiting! Kepler isn't on Mars or the Moon. This dreamy telescope travels around the Sun, trailing behind Earth, with a story about faraway planets.</Narrator></div>
+        <div className="mt-8"><Narrator speaker="host">One more friend is waiting! Kepler isn't on Mars or the Moon. This dreamy telescope travels around the Sun, trailing behind Earth, with a story about faraway planets.</Narrator></div>
         <div className="mt-10">{spaceFriends.map((f) => <FriendCard key={f.id} f={f} tone="space" />)}</div>
       </section>
 
       <section className="mx-auto mt-24 max-w-3xl px-6 text-center">
         <h2 className="text-4xl font-bold text-primary">The End… for now ⭐</h2>
-        <div className="mt-8"><Narrator>Our explorers aren't really lonely. Every time you look up at the night sky, you're saying hello to them. And maybe one day, you'll be the astronaut who visits them! Goodnight, space friends. Hoo-hoo!</Narrator></div>
+        <div className="mt-8"><Narrator speaker="dramatic">Right head here, wiping away a tear. Our explorers aren't really lonely. Every time you look up at the night sky, you're saying hello to them.</Narrator></div>
+        <div className="mt-6"><Narrator speaker="host">And maybe one day, YOU'LL be the astronaut who visits them! Goodnight, space friends. Beep… boop… hoo-hoo!</Narrator></div>
       </section>
     </main>
   );
