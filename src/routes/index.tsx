@@ -87,20 +87,20 @@ function Index() {
         <div className="mt-10 grid gap-6 md:grid-cols-2">{moonFriends.map((f) => <FriendCard key={f.id} f={f} tone="moon" />)}</div>
       </section>
 
-      <section id="space" className="mx-auto mt-24 max-w-3xl px-6">
-        <h2 className="text-center text-4xl font-bold text-primary md:text-5xl">🔭 Chapter 3: Among the Stars</h2>
-        <div className="mt-8"><Narrator>One more friend is waiting! Kepler isn't on Mars or the Moon. This dreamy telescope travels around the Sun, trailing behind Earth, with a story about faraway planets.</Narrator></div>
-        <div className="mt-10">{spaceFriends.map((f) => <FriendCard key={f.id} f={f} tone="space" />)}</div>
-      </section>
-
       <section className="mt-24 px-6">
         <Narrator>Now buckle up! Mars is much farther — the trip takes about seven months. Nobody has ever visited Mars in person, so robots went all by themselves.</Narrator>
       </section>
 
       <section id="mars" className="mx-auto mt-24 max-w-6xl px-6">
         <h2 className="text-center text-4xl font-bold text-mars md:text-5xl">🔴 Chapter 2: Friends on Mars</h2>
-        <img src={mars} alt="Cute Mars rovers, lander and helicopter waving" width={1536} height={1024} loading="lazy" className="mt-8 w-full rounded-[2rem] border-4 border-mars/40" />
+        <img src={mars} alt="Sojourner, Spirit, Opportunity, Phoenix and InSight on Mars" width={1536} height={1024} loading="lazy" className="mt-8 w-full rounded-[2rem] border-4 border-mars/40" />
         <div className="mt-10 grid gap-6 md:grid-cols-2">{marsFriends.map((f) => <FriendCard key={f.name} f={f} tone="mars" />)}</div>
+      </section>
+
+      <section className="mx-auto mt-24 max-w-3xl px-6 text-center">
+        <h2 className="text-center text-4xl font-bold text-primary md:text-5xl">🔭 Chapter 3: Among the Stars</h2>
+        <div className="mt-8"><Narrator>One more friend is waiting! Kepler isn't on Mars or the Moon. This dreamy telescope travels around the Sun, trailing behind Earth, with a story about faraway planets.</Narrator></div>
+        <div className="mt-10">{spaceFriends.map((f) => <FriendCard key={f.id} f={f} tone="space" />)}</div>
       </section>
 
       <section className="mx-auto mt-24 max-w-3xl px-6 text-center">
