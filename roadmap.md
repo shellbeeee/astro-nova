@@ -8,3 +8,4 @@
  - [x] Remove emojis throughout the website and verify the updated story.
  - [x] Add the uploaded interactive 3D model beside Spirit and Opportunity images in their popups and verify rotation, zoom, and mobile layout.
  - [x] Inspect rover nodes and clips, pause the deployed pose, hide white helper boxes, and verify both rover popups.
+- [x] Add Moon and Mars chapter backgrounds and verify desktop and mobile readability.

@@ -1,6 +1,8 @@
 import { ClientOnly, createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 import trio from "@/assets/trio-narrator.png";
+import moonBackdrop from "@/assets/moon-chapter.jpg";
+import marsBackdrop from "@/assets/mars-chapter.jpg";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { explorers, type Explorer } from "@/lib/explorers";
@@ -86,6 +88,14 @@ function EquipmentLineup({ friends }: { friends: Explorer[] }) {
   );
 }
 
+function ChapterBackdrop({ image }: { image: string }) {
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+      <img src={image} alt="" width={1536} height={1024} loading="lazy" className="chapter-backdrop sticky top-0 h-[85dvh] min-h-96 w-full object-cover opacity-40" />
+    </div>
+  );
+}
+
 function Index() {
   return (
     <main className="stars min-h-screen pb-24">
@@ -117,22 +127,28 @@ function Index() {
         </div>
       </section>
 
-      <section id="moon" className="mx-auto mt-24 max-w-6xl px-6">
+      <section id="moon" className="relative isolate mt-24 py-12">
+        <ChapterBackdrop image={moonBackdrop} />
+        <div className="mx-auto max-w-6xl px-6">
         <h2 className="text-center text-4xl font-bold text-moon md:text-5xl">Chapter 1: Friends on the Moon</h2>
         <EquipmentLineup friends={moonFriends} />
         <div className="mt-8"><Narrator speaker="scientist">Left head reporting in! The Moon is quiet and has no wind, so footprints and wheel tracks stay for millions of years. Our first friends arrived with the Apollo astronauts!</Narrator></div>
         <div className="mt-10 grid gap-6 md:grid-cols-2">{moonFriends.map((f) => <FriendCard key={f.id} f={f} tone="moon" />)}</div>
+        </div>
       </section>
 
       <section className="mt-24 px-6">
         <Narrator speaker="dramatic">Now buckle up, because Mars is much farther — the trip takes about seven months. And nobody — nobody! — has ever visited Mars in person. The robots went all by themselves. Alone. In the dust. *gasp*</Narrator>
       </section>
 
-      <section id="mars" className="mx-auto mt-24 max-w-6xl px-6">
+      <section id="mars" className="relative isolate mt-24 py-12">
+        <ChapterBackdrop image={marsBackdrop} />
+        <div className="mx-auto max-w-6xl px-6">
         <h2 className="text-center text-4xl font-bold text-mars md:text-5xl">Chapter 2: Friends on Mars</h2>
         <EquipmentLineup friends={marsFriends} />
         <div className="mt-8"><Narrator speaker="scientist">Here is the clever part: these robots had to drive themselves. A radio message from Earth can take up to twenty minutes to arrive, so by the time we say "stop," a rover has already rolled twice!</Narrator></div>
         <div className="mt-10 grid gap-6 md:grid-cols-2">{marsFriends.map((f) => <FriendCard key={f.name} f={f} tone="mars" />)}</div>
+        </div>
       </section>
 
       <section className="mx-auto mt-24 max-w-3xl px-6 text-center">

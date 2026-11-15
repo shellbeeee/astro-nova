@@ -36,3 +36,5 @@ use the editor.
 - Keep optional explorer GLB URLs in browser-safe explorer data and lazy-load the R3F viewer behind ClientOnly inside dialogs; this avoids server rendering WebGL and downloading 3D code before a rover is opened.
 
 - Prepare rover instances in the shared model helper: apply and pause all final animation keyframes, hide only inspected helper meshes, and normalize visible bounds on a wrapper; this preserves cached assets and animated equipment pivots.
+
+- Keep chapter backdrops decorative and isolated within their own sections, with non-interactive sticky images behind story content; this preserves readable text and accessible explorer dialogs.
