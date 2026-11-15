@@ -8,8 +8,9 @@ import opportunity from "@/assets/opportunity.png.asset.json";
 import phoenix from "@/assets/phoenix.png.asset.json";
 import insight from "@/assets/insight.png.asset.json";
 import kepler from "@/assets/kepler.png.asset.json";
+import roverModel from "@/assets/models/spirit-opportunity.glb.asset.json";
 
-export type Explorer = { id: string; equipment: string; name: string; personality: string; image: string; location: "moon" | "mars" | "space"; greeting: string; dialogue: string; information: string };
+export type Explorer = { id: string; equipment: string; name: string; personality: string; image: string; model?: string; location: "moon" | "mars" | "space"; greeting: string; dialogue: string; information: string };
 
 export const explorers: Explorer[] = [
   {
@@ -69,6 +70,7 @@ export const explorers: Explorer[] = [
   },
   {
     "id": "spirit",
+    "model": roverModel.url,
     "equipment": "Spirit Rover",
     "name": "Spirit",
     "personality": "The determined explorer",
@@ -80,6 +82,7 @@ export const explorers: Explorer[] = [
   },
   {
     "id": "opportunity",
+    "model": roverModel.url,
     "equipment": "Opportunity Rover",
     "name": "Opportunity",
     "personality": "The cheerful marathoner",
