@@ -32,3 +32,5 @@ use the editor.
 - Keep mission facts and character dialogue in a browser-safe data module so each explorer can have an independent, accessible information dialog.
 
 - Store uploaded equipment illustrations as CDN asset pointers and reference their URLs in browser-safe explorer data so chapter lineups, cards, and dialogs share the same image.
+
+- Keep optional explorer GLB URLs in browser-safe explorer data and lazy-load the R3F viewer behind ClientOnly inside dialogs; this avoids server rendering WebGL and downloading 3D code before a rover is opened.

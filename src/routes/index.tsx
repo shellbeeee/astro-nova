@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly, createFileRoute } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 import trio from "@/assets/trio-narrator.png";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/")({
 const moonFriends = explorers.filter((f) => f.location === "moon");
 const marsFriends = explorers.filter((f) => f.location === "mars");
 const spaceFriends = explorers.filter((f) => f.location === "space");
+const RoverViewer = lazy(() => import("@/components/RoverViewer"));
 
 function Narrator({ children, speaker = "host" }: { children: React.ReactNode; speaker?: Speaker }) {
   const head = speakerMeta[speaker];
@@ -49,9 +51,17 @@ export function FriendCard({ f, tone }: { f: Explorer; tone: "moon" | "mars" | "
           <span className="mt-3 text-lg italic leading-relaxed">“{f.dialogue}”</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-3xl border-primary/40 bg-card p-6 sm:p-8">
+      <DialogContent className={`max-h-[85dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-3xl border-primary/40 bg-card p-6 sm:p-8 ${f.model ? "sm:max-w-4xl" : ""}`}>
+        {f.model && <div className="grid min-w-0 items-center gap-4 pt-3 sm:grid-cols-2">
+          <img src={f.image} alt={f.equipment} width={768} height={824} className="h-52 w-full object-contain sm:h-80" />
+          <ClientOnly fallback={<div className="h-64 bg-muted sm:h-80" />}>
+            <Suspense fallback={<div className="flex h-64 items-center justify-center bg-muted text-muted-foreground sm:h-80" role="status">Loading rover…</div>}>
+              <RoverViewer url={f.model} name={f.name} />
+            </Suspense>
+          </ClientOnly>
+        </div>}
         <DialogHeader className="pr-5 text-left">
-          <img src={f.image} alt={f.equipment} width={768} height={824} className="mx-auto h-52 w-full object-contain sm:h-64" />
+          {!f.model && <img src={f.image} alt={f.equipment} width={768} height={824} className="mx-auto h-52 w-full object-contain sm:h-64" />}
           <DialogTitle className={`font-display text-3xl leading-tight tracking-normal ${color}`}>{f.name}</DialogTitle>
           <DialogDescription className="text-base">{f.equipment} · {f.personality}</DialogDescription>
         </DialogHeader>
