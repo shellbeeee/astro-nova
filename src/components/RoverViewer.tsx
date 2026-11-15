@@ -17,9 +17,11 @@ class ViewerBoundary extends Component<{ children: ReactNode }, { failed: boolea
 }
 
 function RoverModel({ url, onReady }: { url: string; onReady: () => void }) {
+  const invalidate = useThree((state) => state.invalidate);
   const { scene, animations } = useGLTF(url);
   const { model } = useMemo(() => prepareRoverModel(scene, animations), [scene, animations]);
   useEffect(() => {
+    invalidate();
     const nodes: { name: string; type: string; parent: string }[] = [];
     scene.traverse((node) => nodes.push({ name: node.name || "(unnamed)", type: node.type, parent: node.parent?.name || "(scene)" }));
     console.group("Rover GLB inspection");
@@ -29,7 +31,7 @@ function RoverModel({ url, onReady }: { url: string; onReady: () => void }) {
     console.table(animations.map((clip) => ({ name: clip.name, duration: clip.duration })));
     console.log("White box meshes hidden", (() => { const hidden: string[] = []; model.traverse((node) => { if (!node.visible) hidden.push(node.name); }); return hidden; })());
     console.groupEnd();
-  }, [scene, animations, model]);
+  }, [scene, animations, model, invalidate]);
   const drawn = useRef(false);
   useFrame(() => {
     if (!drawn.current) {
