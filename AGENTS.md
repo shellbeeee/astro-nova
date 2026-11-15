@@ -38,3 +38,6 @@ use the editor.
 - Prepare rover instances in the shared model helper: apply and pause all final animation keyframes, hide only inspected helper meshes, and normalize visible bounds on a wrapper; this preserves cached assets and animated equipment pivots.
 
 - Keep chapter backdrops decorative and isolated within their own sections, with non-interactive sticky images behind story content; this preserves readable text and accessible explorer dialogs.
+
+- Keep fictional story beats and age-inspired family roles separate from preserved explorer mission facts; this lets story scenes evolve without changing the factual dialogs.
+- Drive decorative scrolling scenes through a shared sticky scene wrapper and CSS progress variable, respecting reduced motion and leaving native scrolling and dialogs accessible.

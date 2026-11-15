@@ -81,10 +81,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lonely Explorers" },
+      { title: "Lost Among the Stars, Found by Us" },
       { name: "description", content: "A kid-friendly space story about the robots left on the Moon and Mars, guided by T.R.I.O., the three-headed Robotic Interplanetary Observer." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lonely Explorers" },
+      { property: "og:title", content: "Lost Among the Stars, Found by Us" },
       { property: "og:description", content: "A kid-friendly space story about the robots left on the Moon and Mars." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
