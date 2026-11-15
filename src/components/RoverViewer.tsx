@@ -6,9 +6,9 @@ import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 class ViewerBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
+  override state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
-  render() {
+  override render() {
     return this.state.failed
       ? <p role="status" className="flex h-full items-center justify-center p-6 text-center text-muted-foreground">The 3D rover could not load. Please reopen this popup to try again.</p>
       : this.props.children;
@@ -63,7 +63,7 @@ function ViewerControls() {
     return () => canvas.removeEventListener("keydown", onKey);
   }, [camera, gl, invalidate]);
   return <OrbitControls ref={controls} makeDefault enablePan={false} minDistance={2.1} maxDistance={9} zoomSpeed={0.6} onChange={() => {
-    gl.domElement.dataset.cameraPosition = camera.position.toArray().join(",");
+    gl.domElement.dataset["cameraPosition"] = camera.position.toArray().join(",");
   }} />;
 }
 
