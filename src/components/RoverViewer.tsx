@@ -78,7 +78,7 @@ export default function RoverViewer({ url, name }: { url: string; name: string }
   return (
     <div className="relative h-64 min-w-0 overflow-hidden rounded-lg border border-border bg-muted sm:h-80" data-scene-ready={ready || undefined} aria-label={`${name} interactive 3D model`}>
       <ViewerBoundary key={version}>
-        <Canvas frameloop="always" dpr={[1, 1.5]} camera={{ position: [3, 2.4, 3.5], fov: 40 }} fallback={<p className="p-6 text-muted-foreground">3D viewing is not available in this browser.</p>} onCreated={({ gl }) => {
+        <Canvas frameloop={ready ? "demand" : "always"} dpr={[1, 1.5]} camera={{ position: [3, 2.4, 3.5], fov: 40 }} fallback={<p className="p-6 text-muted-foreground">3D viewing is not available in this browser.</p>} onCreated={({ gl }) => {
           gl.domElement.tabIndex = 0;
           gl.domElement.setAttribute("aria-label", `${name} 3D rover. Drag to rotate, scroll or pinch to zoom. Keyboard: arrow keys rotate, plus and minus zoom.`);
         }}>
