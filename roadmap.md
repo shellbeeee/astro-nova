@@ -7,3 +7,4 @@
  - [x] Replace chapter artwork with uploaded equipment images and show them in cards and popups.
  - [x] Remove emojis throughout the website and verify the updated story.
  - [x] Add the uploaded interactive 3D model beside Spirit and Opportunity images in their popups and verify rotation, zoom, and mobile layout.
+ - [ ] Inspect rover nodes and clips, pause the deployed pose, hide white helper boxes, and verify both rover popups.

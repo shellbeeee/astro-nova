@@ -1,7 +1,8 @@
 import { Component, Suspense, useEffect, useMemo, useRef, useState, type ComponentRef, type ReactNode } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer, OrbitControls, useGLTF } from "@react-three/drei";
-import { Box3, Spherical, Vector3 } from "three";
+import { Spherical } from "three";
+import { prepareRoverModel } from "@/lib/rover-model";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -16,17 +17,19 @@ class ViewerBoundary extends Component<{ children: ReactNode }, { failed: boolea
 }
 
 function RoverModel({ url, onReady }: { url: string; onReady: () => void }) {
-  const { scene } = useGLTF(url);
-  const model = useMemo(() => {
-    const copy = scene.clone(true);
-    const bounds = new Box3().setFromObject(copy);
-    const size = bounds.getSize(new Vector3());
-    const center = bounds.getCenter(new Vector3());
-    const scale = 2.6 / Math.max(size.x, size.y, size.z, 0.001);
-    copy.scale.multiplyScalar(scale);
-    copy.position.addScaledVector(center, -scale);
-    return copy;
-  }, [scene]);
+  const { scene, animations } = useGLTF(url);
+  const { model } = useMemo(() => prepareRoverModel(scene, animations), [scene, animations]);
+  useEffect(() => {
+    const nodes: { name: string; type: string; parent: string }[] = [];
+    scene.traverse((node) => nodes.push({ name: node.name || "(unnamed)", type: node.type, parent: node.parent?.name || "(scene)" }));
+    console.group("Rover GLB inspection");
+    console.log("All node names", nodes);
+    console.table(nodes);
+    console.log("Animation clips", animations.map((clip) => ({ name: clip.name, duration: clip.duration, tracks: clip.tracks.map((track) => track.name) })));
+    console.table(animations.map((clip) => ({ name: clip.name, duration: clip.duration })));
+    console.log("White box meshes hidden", (() => { const hidden: string[] = []; model.traverse((node) => { if (!node.visible) hidden.push(node.name); }); return hidden; })());
+    console.groupEnd();
+  }, [scene, animations, model]);
   const drawn = useRef(false);
   useFrame(() => {
     if (!drawn.current) {

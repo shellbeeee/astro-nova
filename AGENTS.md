@@ -34,3 +34,5 @@ use the editor.
 - Store uploaded equipment illustrations as CDN asset pointers and reference their URLs in browser-safe explorer data so chapter lineups, cards, and dialogs share the same image.
 
 - Keep optional explorer GLB URLs in browser-safe explorer data and lazy-load the R3F viewer behind ClientOnly inside dialogs; this avoids server rendering WebGL and downloading 3D code before a rover is opened.
+
+- Prepare rover instances in the shared model helper: apply and pause all final animation keyframes, hide only inspected helper meshes, and normalize visible bounds on a wrapper; this preserves cached assets and animated equipment pivots.
