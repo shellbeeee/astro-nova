@@ -1,6 +1,6 @@
 # Moon and Mars Storybook
 
-a storytelling website that tells the story about the NASA space instruments that were left behind on the moon and mars. i want it to be kid friendly and each of the space instruments are like their own character, and we also have a narrator too
+a storytelling website that tells the story about the NASA space instruments that were left behind on the moon and mars. 
 
 This project was built with [Lovable](https://lovable.dev).
 
